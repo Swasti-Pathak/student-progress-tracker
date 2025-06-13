@@ -1,62 +1,33 @@
-let tasks = [];
-
 function addTask() {
-  const name = document.getElementById("taskName").value;
-  const desc = document.getElementById("taskDesc").value;
-  const date = document.getElementById("taskDate").value;
+  const name = document.getElementById('taskName').value;
+  const desc = document.getElementById('taskDesc').value;
+  const date = document.getElementById('taskDate').value;
 
-  if (name === "") {
-    alert("Task name is required");
+  if (!name || !date) {
+    alert("Please fill in all required fields.");
     return;
   }
 
-  const task = {
-    name,
-    desc,
-    date,
-    completed: false
-  };
+  const taskSection = document.querySelector('.task-list');
+  const taskDiv = document.createElement('div');
+  taskDiv.classList.add('task-item');
+  taskDiv.innerHTML = `
+    <h3>${name}</h3>
+    <p>${desc}</p>
+    <small>Due: ${date}</small>
+    <hr />
+  `;
+  taskSection.appendChild(taskDiv);
 
-  tasks.push(task);
-  updateDisplay();
-  clearInputs();
+  updateProgress();
 }
 
-function updateDisplay() {
-  const taskList = document.getElementById("taskList");
-  const milestoneList = document.getElementById("milestoneList");
-  const completedTasks = tasks.filter(t => t.completed).length;
+function updateProgress() {
+  const tasks = document.querySelectorAll('.task-item').length;
+  const progress = document.getElementById('progressBar');
+  const text = document.getElementById('progressText');
 
-  taskList.innerHTML = "";
-  milestoneList.innerHTML = "";
-
-  tasks.forEach((task, index) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${task.name}</strong> - ${task.desc} (Due: ${task.date})
-      <button onclick="markComplete(${index})">${task.completed ? "✅" : "Mark Done"}</button>
-    `;
-    taskList.appendChild(li);
-
-    if (task.date) {
-      const ms = document.createElement("li");
-      ms.textContent = `${task.name} → ${task.date}`;
-      milestoneList.appendChild(ms);
-    }
-  });
-
-  const percent = Math.round((completedTasks / tasks.length) * 100) || 0;
-  document.getElementById("progressText").innerText = `${percent}% Completed`;
-  document.getElementById("progressBar").value = percent;
-}
-
-function markComplete(index) {
-  tasks[index].completed = true;
-  updateDisplay();
-}
-
-function clearInputs() {
-  document.getElementById("taskName").value = "";
-  document.getElementById("taskDesc").value = "";
-  document.getElementById("taskDate").value = "";
+  const percent = Math.min(tasks * 10, 100); // example logic
+  progress.value = percent;
+  text.textContent = `${percent}% Completed`;
 }
