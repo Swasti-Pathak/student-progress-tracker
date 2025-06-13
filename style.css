@@ -1,0 +1,38 @@
+body {
+  font-family: sans-serif;
+  margin: 20px;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+h1 {
+  color: #333;
+}
+
+.task-form input, .task-form button {
+  margin: 5px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.progress {
+  margin-top: 20px;
+}
+
+.task-list ul, .milestones ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.task-list li, .milestones li {
+  background-color: #fff;
+  margin: 8px 0;
+  padding: 10px;
+  border-left: 5px solid #007bff;
+}
