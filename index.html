@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Progress Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>📘 Student Progress Tracker</h1>
+
+  <section class="task-form">
+    <input id="taskName" type="text" placeholder="Task Name">
+    <input id="taskDesc" type="text" placeholder="Task Description">
+    <input id="taskDate" type="date">
+    <button onclick="addTask()">Add Task</button>
+  </section>
+
+  <section class="progress">
+    <p id="progressText">0% Completed</p>
+    <progress id="progressBar" value="0" max="100"></progress>
+  </section>
+
+  <section class="task-list">
+    <h2>✅ All Tasks</h2>
+    <ul id="taskList"></ul>
+  </section>
+
+  <section class="milestones">
+    <h2>📍 Milestones</h2>
+    <ul id="milestoneList"></ul>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
