@@ -1,42 +1,71 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f5f7fa;
-  color: #333;
+  background-color: #f4f7f9;
   margin: 0;
   padding: 20px;
+  color: #333;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
   color: #2c3e50;
 }
 
 .task-form, .task-list, .progress {
-  max-width: 600px;
+  background: white;
   margin: 20px auto;
-  background: #ffffff;
   padding: 20px;
-  border-radius: 12px;
+  max-width: 700px;
+  border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-input, button {
-  display: block;
+input[type="text"], input[type="date"] {
   width: 100%;
-  margin: 10px 0;
   padding: 10px;
-  font-size: 1em;
+  margin-top: 8px;
+  margin-bottom: 12px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 button {
+  padding: 10px 20px;
   background-color: #007bff;
   color: white;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 1rem;
 }
 
 button:hover {
   background-color: #0056b3;
+}
+
+.task-item {
+  background: #eef3f9;
+  border-left: 6px solid #007bff;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 6px;
+}
+
+.task-item.milestone {
+  border-left-color: #ff9800;
+  background-color: #fff3e0;
+}
+
+.task-item.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task-buttons {
+  margin-top: 10px;
+}
+
+progress {
+  width: 100%;
+  height: 20px;
 }
