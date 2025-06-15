@@ -1,71 +1,71 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f7f9;
+  margin: 0;
   padding: 20px;
-  background-color: #f4f4f4;
-}
-h1, h3 {
   color: #333;
 }
-form {
-  background-color: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
+
+h1, h2 {
+  text-align: center;
+  color: #2c3e50;
 }
+
+.task-form, .task-list, .progress {
+  background: white;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
 input[type="text"], input[type="date"] {
-  padding: 10px;
-  margin: 8px 0;
   width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
 }
+
 button {
   padding: 10px 20px;
-  margin-top: 10px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 1rem;
 }
+
 button:hover {
   background-color: #0056b3;
 }
-#progressContainer {
-  background: #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-#progressBar {
-  height: 30px;
-  background-color: green;
-  color: white;
-  line-height: 30px;
-  text-align: center;
-  width: 0%;
-  transition: width 0.5s ease;
-}
-ul#taskList {
-  list-style-type: none;
-  padding-left: 0;
-}
-ul#taskList li {
-  background: white;
+
+.task-item {
+  background: #eef3f9;
+  border-left: 6px solid #007bff;
+  padding: 15px;
   margin: 10px 0;
-  padding: 10px;
   border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
-li.completed {
+
+.task-item.milestone {
+  border-left-color: #ff9800;
+  background-color: #fff3e0;
+}
+
+.task-item.completed {
   text-decoration: line-through;
-  color: gray;
+  opacity: 0.6;
 }
-.milestone {
-  background: #fff3cd;
-  padding: 10px;
-  border-left: 6px solid #ffc107;
-  margin: 10px 0;
-  border-radius: 4px;
+
+.task-buttons {
+  margin-top: 10px;
+}
+
+progress {
+  width: 100%;
+  height: 20px;
 }
