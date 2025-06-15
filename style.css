@@ -84,3 +84,37 @@ progress {
   height: 20px;
   border-radius: 8px;
 }
+/* Same CSS as before, add the following at the bottom */
+
+.milestones {
+  background: #fff4e6;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.milestones h2 {
+  color: #d9480f;
+}
+
+#milestoneList li {
+  margin: 10px 0;
+  padding: 10px;
+  border-left: 5px solid #ffa94d;
+  background: #fff;
+  border-radius: 6px;
+  list-style: none;
+}
+
+.highlight-deadline {
+  border-left-color: #ff6b6b;
+  background: #ffe3e3;
+}
+
+.achieved {
+  border-left-color: #51cf66;
+  background: #e6fcf5;
+  text-decoration: line-through;
+  color: #2f9e44;
+}
+
