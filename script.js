@@ -1,90 +1,92 @@
-// ✅ Firebase-Connected JavaScript (script.js)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// Access Firebase globals set in HTML
-const db = window.db;
-const ref = window.firebaseRef;
-const set = window.firebaseSet;
-const get = window.firebaseGet;
-const onValue = window.firebaseOnValue;
-const remove = window.firebaseRemove;
+// Your Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyBHFLdenO3S9iJpG_P6BKPJ9HLE-gdBAiA",
+  authDomain: "student-progress-tracker-d72cb.firebaseapp.com",
+  projectId: "student-progress-tracker-d72cb",
+  storageBucket: "student-progress-tracker-d72cb.appspot.com",
+  messagingSenderId: "432413212328",
+  appId: "1:432413212328:web:aae8d7bf8c0c61f934cc9d"
+};
 
-// 🔧 HTML Elements
-const taskForm = document.getElementById("taskForm");
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// DOM Elements
+const form = document.getElementById("taskForm");
 const taskList = document.getElementById("taskList");
+const milestones = document.getElementById("milestones");
 const progressBar = document.getElementById("progressBar");
-const milestoneSection = document.getElementById("milestones");
 
-// 👇 Replace with a unique user ID (can use login later)
-const USER_ID = "test_user_01";
-const TASKS_PATH = ref(db, `users/${USER_ID}/tasks`);
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-// 🟢 Submit New Task
-if (taskForm) {
-  taskForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const taskName = document.getElementById("taskName").value;
-    const taskDesc = document.getElementById("taskDesc").value;
-    const dueDate = document.getElementById("dueDate").value;
-    const isMilestone = document.getElementById("milestone").checked;
+  const taskName = document.getElementById("taskName").value;
+  const taskDesc = document.getElementById("taskDesc").value;
+  const dueDate = document.getElementById("dueDate").value;
+  const milestone = document.getElementById("milestone").checked;
 
-    const taskId = Date.now().toString();
-    const taskData = {
-      name: taskName,
-      description: taskDesc,
-      dueDate: dueDate,
-      completed: false,
-      milestone: isMilestone
-    };
+  const taskId = Date.now().toString();
 
-    set(ref(db, `users/${USER_ID}/tasks/${taskId}`), taskData);
+  const taskData = {
+    taskName,
+    taskDesc,
+    dueDate,
+    milestone,
+    completed: false
+  };
 
-    taskForm.reset();
-  });
-}
+  set(ref(db, "tasks/" + taskId), taskData);
 
-// 🔄 Render Tasks in Realtime
-onValue(TASKS_PATH, (snapshot) => {
-  taskList.innerHTML = "";
-  milestoneSection.innerHTML = "";
-  let completed = 0, total = 0;
-
-  snapshot.forEach((child) => {
-    const id = child.key;
-    const task = child.val();
-    total++;
-    if (task.completed) completed++;
-
-    const li = document.createElement("li");
-    li.className = task.completed ? "completed" : "";
-    li.innerHTML = `
-      <strong>${task.name}</strong> - ${task.description} <br>
-      Due: ${task.dueDate} <br>
-      <button onclick="toggleTask('${id}', ${task.completed})">${task.completed ? "Undo" : "Complete"}</button>
-      <button onclick="deleteTask('${id}')">Delete</button>
-    `;
-    taskList.appendChild(li);
-
-    if (task.milestone) {
-      const m = document.createElement("div");
-      m.className = "milestone";
-      m.innerHTML = `🎯 <strong>${task.name}</strong> – Deadline: ${task.dueDate}`;
-      milestoneSection.appendChild(m);
-    }
-  });
-
-  // 🔵 Update progress
-  const percent = total === 0 ? 0 : Math.floor((completed / total) * 100);
-  progressBar.style.width = `${percent}%`;
-  progressBar.innerText = `${percent}% Completed`;
+  form.reset();
 });
 
-// ✅ Toggle Completion
-window.toggleTask = function(id, currentStatus) {
-  set(ref(db, `users/${USER_ID}/tasks/${id}/completed`), !currentStatus);
-};
+onValue(ref(db, "tasks/"), (snapshot) => {
+  taskList.innerHTML = "";
+  milestones.innerHTML = "";
 
-// ❌ Delete Task
-window.deleteTask = function(id) {
-  remove(ref(db, `users/${USER_ID}/tasks/${id}`));
-};
+  const data = snapshot.val();
+  let completedCount = 0;
+  let totalCount = 0;
 
+  for (let id in data) {
+    const task = data[id];
+    totalCount++;
+
+    const li = document.createElement("li");
+    li.textContent = `${task.taskName} - Due: ${task.dueDate}`;
+    li.className = task.completed ? "completed" : "";
+
+    const completeBtn = document.createElement("button");
+    completeBtn.textContent = task.completed ? "Undo" : "Complete";
+    completeBtn.onclick = () => {
+      set(ref(db, "tasks/" + id), { ...task, completed: !task.completed });
+    };
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.onclick = () => {
+      remove(ref(db, "tasks/" + id));
+    };
+
+    li.appendChild(completeBtn);
+    li.appendChild(deleteBtn);
+    taskList.appendChild(li);
+
+    if (task.completed) completedCount++;
+
+    if (task.milestone) {
+      const div = document.createElement("div");
+      div.className = "milestone";
+      div.textContent = `🎯 ${task.taskName} - ${task.dueDate}`;
+      milestones.appendChild(div);
+    }
+  }
+
+  const percentage = totalCount ? Math.round((completedCount / totalCount) * 100) : 0;
+  progressBar.style.width = percentage + "%";
+  progressBar.textContent = `${percentage}% Completed`;
+});
