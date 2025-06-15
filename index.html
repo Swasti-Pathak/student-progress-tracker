@@ -7,26 +7,35 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>🎓 Student Progress Tracker</h1>
-  <form id="taskForm">
-    <input id="taskName" type="text" required placeholder="Task Name" />
-    <input id="taskDesc" type="text" placeholder="Description" />
-    <input id="dueDate" type="date" required />
-    <label><input type="checkbox" id="milestone" /> Mark as Milestone</label>
-    <button type="submit">Add Task</button>
-  </form>
 
-  <div id="progressContainer">
-    <div id="progressBar">0% Completed</div>
+  <h1>🎯 Student Progress Tracker</h1>
+
+  <!-- Add Task -->
+  <div class="task-form">
+    <h2>Add New Task</h2>
+    <input type="text" id="taskName" placeholder="Task Title" />
+    <input type="text" id="taskDesc" placeholder="Description (optional)" />
+    <input type="date" id="taskDate" />
+    <label>
+      <input type="checkbox" id="isMilestone" /> Mark as Milestone
+    </label>
+    <button onclick="addTask()">Add Task</button>
   </div>
 
-  <h3>📝 Your Tasks</h3>
-  <ul id="taskList"></ul>
+  <!-- Progress Bar -->
+  <div class="progress">
+    <h2>📈 Progress</h2>
+    <progress id="progressBar" max="100" value="0"></progress>
+    <p id="progressText">0% Completed</p>
+  </div>
 
-  <h3>🎯 Milestones</h3>
-  <div id="milestones"></div>
+  <!-- Task List -->
+  <div class="task-list">
+    <h2>📋 All Tasks</h2>
+    <div id="tasksContainer"></div>
+  </div>
 
-  <!-- Firebase Config and Main Script -->
-  <script type="module" src="script.js"></script>
+  <!-- JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>
