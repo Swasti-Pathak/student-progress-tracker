@@ -10,7 +10,7 @@
 
   <h1>🎯 Student Progress Tracker</h1>
 
-  <!-- Add Task -->
+  
   <div class="task-form">
     <h2>Add New Task</h2>
     <input type="text" id="taskName" placeholder="Task Title" />
@@ -22,20 +22,52 @@
     <button onclick="addTask()">Add Task</button>
   </div>
 
-  <!-- Progress Bar -->
+  
   <div class="progress">
     <h2>📈 Progress</h2>
     <progress id="progressBar" max="100" value="0"></progress>
     <p id="progressText">0% Completed</p>
   </div>
 
-  <!-- Task List -->
+  
   <div class="task-list">
     <h2>📋 All Tasks</h2>
     <div id="tasksContainer"></div>
   </div>
 
-  <!-- JavaScript -->
+  
   <script src="script.js"></script>
+  
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBHFLdenO3S9iJpG_P6BKPJ9HLE-gdBAiA",
+    authDomain: "student-progress-tracker-d72cb.firebaseapp.com",
+    projectId: "student-progress-tracker-d72cb",
+    storageBucket: "student-progress-tracker-d72cb.firebasestorage.app",
+    messagingSenderId: "432413212328",
+    appId: "1:432413212328:web:aae8d7bf8c0c61f934cc9d"
+  };
+
+  
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+ 
+  window.db = db;
+  window.firebaseRef = ref;
+  window.firebaseSet = set;
+  window.firebaseGet = get;
+  window.firebaseOnValue = onValue;
+  window.firebaseRemove = remove;
+</script>
+
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
+
 </body>
 </html>
